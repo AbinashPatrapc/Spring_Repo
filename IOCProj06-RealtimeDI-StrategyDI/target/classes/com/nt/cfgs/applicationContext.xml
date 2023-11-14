@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:context="http://www.springframework.org/schema/context"
+    xsi:schemaLocation="http://www.springframework.org/schema/beans
+    http://www.springframework.org/schema/beans/spring-beans.xsd">
+    
+     <!--Oracle DataSource Configuration -->
+    <bean id="dtsr" class="org.springframework.jdbc.datasource.DriverManagerDataSource">
+		<property name="driverClassName" value="oracle.jdbc.driver.OracleDriver"></property>
+		<property name="url" value="jdbc:oracle:thin:@localhost:1521:xe"></property>
+		<property name="username" value="Abinash"></property>
+		<property name="password" value="1234"></property>
+	</bean>
+	
+	<!-- DAO class configuration-->
+	<bean id="empdao" class="com.nt.dao.EmployeeOracleDaoImpl">
+		<constructor-arg name="ds" ref="dtsr"></constructor-arg>
+	</bean>
+	
+	<!-- Service Class Configuration-->
+	<bean id="srvc" class="com.nt.service.EmployeeMgmtServiceImpl">
+		<constructor-arg name="dao" ref="empdao"></constructor-arg>
+	</bean>
+	
+	<!-- Controller Class Configuration-->
+	<bean id="control" class="com.nt.controller.MainController">
+		<constructor-arg name="service" ref="srvc"></constructor-arg>
+	</bean>
+    
+   
+    </beans>
